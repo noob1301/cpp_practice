@@ -1,3 +1,6 @@
+/*
+	실패작이다 이거야
+*/
 #include<iostream>
 #include<vector>
 #include<string>
