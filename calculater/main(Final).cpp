@@ -54,6 +54,7 @@ void LtoRMakeeasy(pair<int,int> a){
         if(list[i+1]=='*') S*=numberstore[list[i+2]];
         if(list[i+1]=='/') S/=numberstore[list[i+2]];
     }
+    for(int i=a.first;i<a.second;i++) list[i]=0;
     list[a.second]=numberstore.size();
     numberstore.push_back(S);
 }
