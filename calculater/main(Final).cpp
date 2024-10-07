@@ -24,17 +24,16 @@ void NumberJudger(){
         if(list[i]>='0'&&list[i]<='9'){
             h=i;
             while(list[i]>='0'&&list[i]<='9'){
-                s=10*s+list[i]-'0';
+                s=(10*s)+list[i]-'0';
                 i++;
             }
             list[h]=numberstore.size();
             numberstore.push_back(s);
-            for(int j=h+1;j<i;j++)
+            for(int j=h+1;j<i;j++) {
                 list[j]=0;
-        }    
-        else
-            list[i]=list[i];    
-    }
+            }
+        }
+    }    
 }
 
 void ListMakeEasy(){
@@ -46,27 +45,32 @@ void ListMakeEasy(){
     list=list_store;
 }
 
-void LtoRMakeeasy(pair<int,int> a){
-    int S=list[numberstore[a.first+1]];
+void LtoRMakeeasy(pair<int,int> a,bool noBracket){
+    int S=numberstore[list[a.first+1]];
     for(int i=a.first+1;i<=a.second-3;i+=2){
         if(list[i+1]=='+') S+=numberstore[list[i+2]];
         if(list[i+1]=='-') S-=numberstore[list[i+2]];
         if(list[i+1]=='*') S*=numberstore[list[i+2]];
         if(list[i+1]=='/') S/=numberstore[list[i+2]];
+        printf("S의 상태:%d\n",S);
+        cout << "list[i]: " << static_cast<int>(list[i]) << endl;
     }
-    for(int i=a.first;i<a.second;i++) list[i]=0;
-    list[a.second]=numberstore.size();
+    if (!noBracket){
+        for(int i=a.first;i<a.second;i++) list[i]=0;
+        list[a.second]=numberstore.size();
+    }
+    list[a.second-1]=numberstore.size();
     numberstore.push_back(S);
 }
 
 int Solver(){
     NumberJudger();
     while(FindClose().second!=0){
-        list[FindClose().first]=0;
-        LtoRMakeeasy(FindClose());
+        LtoRMakeeasy(FindClose(),false);
         ListMakeEasy();
     }
-    return numberstore[list[0]];
+    LtoRMakeeasy({-1,list.size()},true);
+    return numberstore[list[list.size()-1]];
 }
 
 int main(){
