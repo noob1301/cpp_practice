@@ -7,89 +7,85 @@ using namespace std;
 
 vector<char> list;
 vector<char> list_store;
-vector<int> numberstore;
+vector<int> numberstore={0};
 
-pair<int,int> FindClose(){
-    int Opener,Closer=0;
+bool MatchingFinder(){
+    for(int i=0;i<list.size();i++)
+        if(list[i]==')') return true;
+    return false;    
+}
+
+pair<int,int> MatchingIndex(){
+    int OpenIndex;
     for(int i=0;i<list.size();i++){
-        if(list[i]=='(') Opener=i;
-        if(list[i]==')') return {Opener,i};
+        if(list[i]=='(') OpenIndex=i;
+        if(list[i]==')') return {OpenIndex,i};
     }
-    return {0,0};
 }
 
-void NumberJudger(){
+void ListMakeSimple(){
+    list_store.clear();
     for(int i=0;i<list.size();i++){
-        int s=0,h;
-        if(list[i]>='0'&&list[i]<='9'){
-            h=i;
-            while(list[i]>='0'&&list[i]<='9'){
-                s=(10*s)+list[i]-'0';
-                i++;
-            }
-            list[h]=numberstore.size();
-            numberstore.push_back(s);
-            for(int j=h+1;j<i;j++) {
-                list[j]=0;
-            }
-        }
-    }    
-}
-
-void ListMakeEasy(){
-    for(int i=0;i<list.size();i++){
-        if(list[i]==0)
-            continue;
-        list_store.push_back(list[i]);
+        if(list[i]==0) continue;
+        else list_store.push_back(list[i]);
     }
     list=list_store;
 }
 
-void LtoRMakeeasy(pair<int,int> a,bool noBracket){
-    int S=numberstore[list[a.first+1]];
-    for(int i=a.first+1;i<=a.second-3;i+=2){
-        if(list[i+1]=='+') S+=numberstore[list[i+2]];
-        if(list[i+1]=='-') S-=numberstore[list[i+2]];
-        if(list[i+1]=='*') S*=numberstore[list[i+2]];
-        if(list[i+1]=='/') S/=numberstore[list[i+2]];
-        printf("S의 상태:%d\n",S);
-        cout << "list[i]: " << static_cast<int>(list[i]) << endl;
+void NumberParshing(){
+    int Sum;
+    for(int i=0;i<list.size();i++){
+         if(list[i]>='0'&&list[i]<='9'&&list[i]!='('){
+             Sum=0;
+             while(list[i]>='0'&&list[i]<='9'){
+                 Sum=Sum*10+list[i]-'0';
+                 list[i]=0;
+                 i++;
+             }
+         list[i-1]=numberstore.size();
+         numberstore.push_back(Sum);
+         }
     }
-    if (!noBracket){
-        for(int i=a.first;i<a.second;i++) list[i]=0;
-        list[a.second]=numberstore.size();
-    }
-    list[a.second-1]=numberstore.size();
-    numberstore.push_back(S);
+    ListMakeSimple();
 }
 
-int Solver(){
-    NumberJudger();
-    while(FindClose().second!=0){
-        LtoRMakeeasy(FindClose(),false);
-        ListMakeEasy();
+void Calculater(pair<int,int> Index){
+    int Result=numberstore[list[Index.first+1]];
+    for(int i=Index.first+1;i<=Index.second-3;i+=2){
+        if(list[i+1]=='+') Result+=numberstore[list[i+2]];
+        if(list[i+1]=='-') Result-=numberstore[list[i+2]];
+        if(list[i+1]=='*') Result*=numberstore[list[i+2]];
+        if(list[i+1]=='/') Result/=numberstore[list[i+2]];
     }
-    LtoRMakeeasy({-1,list.size()},true);
-    return numberstore[list[list.size()-1]];
+    for(int i=Index.first;i<Index.second;i++) list[i]=0;
+    if(!MatchingFinder()) list[Index.second-1]=numberstore.size();
+    else list[Index.second]=numberstore.size();
+    numberstore.push_back(Result);
+    ListMakeSimple();
+}
+
+int solver(){
+    NumberParshing();
+    while(MatchingFinder()) Calculater(MatchingIndex());
+    Calculater({-1,list.size()});
+    return numberstore[list[0]];
 }
 
 int main(){
-    string respond;
     while(true){
-        printf("\n계산기를 사용하시겠습니까?:");
+        string respond;
+        printf("계산기를 사용하시겠습니까?:");
         cin>>respond;
         if(respond=="no") break;
-        printf("계산할 식:");
         numberstore={0};
         list.clear();
-        list_store.clear();
-        char receive=getchar();
-        while(1){
-            receive=getchar();
-            if(receive=='\n')
-                break;
-            list.push_back(receive);
+        printf("계산할 식:");
+        char Respond=getchar();
+        while(true){
+            Respond=getchar();
+            if(Respond=='\n') break;
+            list.push_back(Respond);
         }
-        printf("=%d",Solver());
+        printf("=%d\n",solver());
     }
 }
