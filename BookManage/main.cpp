@@ -1,6 +1,7 @@
 #include<iostream>
 #include<string>
 #include<vector>
+#include<algorithm>
 
 using namespace std;
 
@@ -15,6 +16,9 @@ public:
         writtenyear=b;
         bookname=c;
         authorname=d;
+    }
+    bool operator<(const Aboutbook&a)const{
+        return number<a.number;
     }
 };
 
@@ -32,13 +36,19 @@ void add(){
 }
 
 void remove(){
-    for(int i=0;i<list.size();i++) printf("%d:%d %d년 이름:%s 작가:%s\n",list[i].number,list[i].writtenyear,(list[i].bookname).c_str(),(list[i].authorname).c_str());
+    int receive;
+    std::sort(list.begin(),list.end());
+    for(int i=0;i<list.size();i++) printf("%d:%d %s %s\n",list[i].number,list[i].writtenyear,(list[i].bookname).c_str(),(list[i].authorname).c_str());
+    while(scanf("%d",&receive)){
+        for(int i=receive;i<list.size()-1;i++) list[i]=list[i+1];
+    }
+    list.pop_back();
 }
 
 int main(){
     string reply;
     while(true){
-        printf("---\n1:등록 2:삭제 3:검색 4:종료");
+        printf("---\n1:등록 2:삭제 3:검색 4:종료:");
         cin >> reply;
         if(reply=="1") add();
         else if(reply=="2") remove();
