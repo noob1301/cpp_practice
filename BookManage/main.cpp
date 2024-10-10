@@ -41,8 +41,8 @@ void remove(){
     for(int i=0;i<list.size();i++) printf("%d:%d %s %s\n",list[i].number,list[i].writtenyear,(list[i].bookname).c_str(),(list[i].authorname).c_str());
     while(scanf("%d",&receive)){
         for(int i=receive;i<list.size()-1;i++) list[i]=list[i+1];
+        list.pop_back();
     }
-    list.pop_back();
 }
 
 int main(){
