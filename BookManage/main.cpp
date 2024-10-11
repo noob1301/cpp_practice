@@ -39,16 +39,24 @@ void remove(){
     int receive;
     std::sort(list.begin(),list.end());
     for(int i=0;i<list.size();i++) printf("%d:%d %s %s\n",list[i].number,list[i].writtenyear,(list[i].bookname).c_str(),(list[i].authorname).c_str());
-    while(scanf("%d",&receive)){
-        for(int i=receive;i<list.size()-1;i++) list[i]=list[i+1];
-        list.pop_back();
+    printf("삭제할 책 번호(띄어쓰기로 구분):");
+    while(scanf("%d",receive)){
+        int index=0;
+        while(index<list.size()){
+            if(list[index].number==receive) break;
+        }
+        if(list[index].number!=receive) continue;
+        else{
+            for(int i=index;i<list.size()-2;i++) list.at(i)=list.at(i);
+        }
     }
+    list.pop_back();
 }
 
 int main(){
     string reply;
     while(true){
-        printf("---\n1:등록 2:삭제 3:검색 4:종료:");
+        printf("---\n1:등록 2:삭제 3:검색 4:종료\n입력:");
         cin >> reply;
         if(reply=="1") add();
         else if(reply=="2") remove();
