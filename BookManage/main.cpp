@@ -3,6 +3,10 @@
 #include<vector>
 #include<algorithm>
 
+/*
+이것도 망했다 익어야
+*/
+
 using namespace std;
 
 class Aboutbook{
