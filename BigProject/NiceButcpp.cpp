@@ -6,14 +6,24 @@
 
 using namespace std;
 
+class ClassInformation{
+public:
+    int grade;
+    int classNumber;
+    ClassInformation(int grade,int classNumber){
+        this->grade=grade;
+        this->classNumber=classNumber;
+    }
+};
+
 class UserInformation{
 public:
     string ID;
     string Password;
-    pair<int,int> ManageClass;
-    UserInformation(string a,string b,pair<int,int> c){
+    ClassInformation classInformation;
+    UserInformation(string a,string b,ClassInformation c){
         ID=a,Password=b;
-        ManageClass={c.first,c.second};
+        classInformation=c;
     }
 };
 
@@ -22,10 +32,10 @@ vector<UserInformation> Userlist;
 int FindUserIndex(string receive){
     for(int i=0;i<Userlist.size();i++)
         if(Userlist[i].ID==receive) return i;
-    return -1;    
+    return -1;
 }
 
-bool isAlreadyExist(string receive){
+bool isAlreadyExists(string receive){
     for(int i=0;i<Userlist.size();i++)
         if(Userlist[i].ID==receive) return true;
     return false;    
@@ -34,9 +44,10 @@ bool isAlreadyExist(string receive){
 int main(){
     int reply,UserIndex;
     string reply_str;
-    regex HaveShouldOnIDandPW(R"([a-zA-Z0-9]{4,15})");
+    regex HaveShouldOnID(R"([a-zA-Z0-9]{4,15})");
     regex DoNotHaveOnID(R"([!@#$%^&*()]+)");
-    regex HaveShouldOnPW(R"([!_]+)");
+    regex HaveShouldOnPW(R"([a-zA-Z0-9!_]{4,15})");
+    regex HaveShouldOnPW2(R"([!_]+)");
     regex CantHavePatternOnPW(R"([a-zA-Z!_]{3,14}[_]+)");
     while(true){
         while(true){
@@ -60,14 +71,14 @@ int main(){
             else if(reply==2){
                 printf("새로운 아이디 입력:");
                 cin>>reply_str;
-                if(isAlreadyExist(reply_str)) printf("이미 존재하는 아이디입니다.\n");
-                else if(!regex_match(reply_str,HaveShouldOnIDandPW)||regex_search(reply_str,DoNotHaveOnID))
+                if(isAlreadyExists(reply_str)) printf("이미 존재하는 아이디입니다.\n");
+                else if(!regex_match(reply_str,HaveShouldOnID)||regex_search(reply_str,DoNotHaveOnID))
                     printf("아이디 형식이 맞지 않습니다.ex)4~15글자아님,특수기호 사용\n");
                 else{
                     string Store_ID=reply_str,Store_Password;
                     printf("비밀번호 입력:");
                     cin>>reply_str;
-                    if(!regex_match(reply_str,HaveShouldOnIDandPW)||!regex_search(reply_str,HaveShouldOnPW)||regex_match(reply_str,CantHavePatternOnPW)){
+                    if(!regex_match(reply_str,HaveShouldOnPW)||!regex_search(reply_str,HaveShouldOnPW2)||regex_match(reply_str,CantHavePatternOnPW)){
                         printf("잘못된 비밀번호 형식입니다.ex)4~15글자가 아님,!또는_미사용,_를 끝에 사용\n");
                     }
                     else{
@@ -77,7 +88,7 @@ int main(){
                         scanf("%d-%d",&a,&b);
                         if(a>99||b>99) printf("존재할 수 없는 반");
                         else{
-                            Userlist.push_back(UserInformation(Store_ID,Store_Password,{a,b}));
+                            Userlist.push_back(UserInformation(Store_ID,Store_Password,ClassInformation(a,b)));
                             UserIndex=Userlist.size()-1;
                             printf("환영합니다. %님\n",(Userlist[UserIndex].ID).c_str());
                             break;
