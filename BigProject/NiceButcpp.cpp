@@ -37,7 +37,7 @@ int main(){
     regex HaveShouldOnIDandPW(R"([a-zA-Z0-9]{4,15})");
     regex DoNotHaveOnID(R"([!@#$%^&*()]+)");
     regex HaveShouldOnPW(R"([!_]+)");
-    regex CantHavePatternOnPW(R"([a-zA-Z!_]{4,14}[_]+)");
+    regex CantHavePatternOnPW(R"([a-zA-Z!_]{3,14}[_]+)");
     while(true){
         while(true){
             printf("1.로그인 2.회원가입 3.종료:");
