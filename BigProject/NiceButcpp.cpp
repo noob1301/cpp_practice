@@ -10,10 +10,7 @@ class ClassInformation{
 public:
     int grade;
     int classNumber;
-    ClassInformation(int grade,int classNumber){
-        this->grade=grade;
-        this->classNumber=classNumber;
-    }
+    ClassInformation(int grade,int classNumber):grade(grade),classNumber(classNumber){}
 };
 
 class UserInformation{
@@ -21,10 +18,7 @@ public:
     string ID;
     string Password;
     ClassInformation classInformation;
-    UserInformation(string a,string b,ClassInformation c){
-        ID=a,Password=b;
-        classInformation=c;
-    }
+    UserInformation(string a,string b,ClassInformation c):ID(a),Password(b),classInformation(c){}
 };
 
 vector<UserInformation> Userlist;
@@ -90,7 +84,7 @@ int main(){
                         else{
                             Userlist.push_back(UserInformation(Store_ID,Store_Password,ClassInformation(a,b)));
                             UserIndex=Userlist.size()-1;
-                            printf("환영합니다. %님\n",(Userlist[UserIndex].ID).c_str());
+                            printf("환영합니다. %s님\n",(Userlist[UserIndex].ID).c_str());
                             break;
                         }
                     }
@@ -101,6 +95,5 @@ int main(){
                 return 0;
             }
         }
-        printf("break확인됨");
     }
 }
