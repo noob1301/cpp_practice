@@ -10,6 +10,7 @@ class ClassInformation{
 public:
     int grade;
     int classNumber;
+    ClassInformation()=default;
     ClassInformation(int grade,int classNumber):grade(grade),classNumber(classNumber){}
 };
 
@@ -21,7 +22,22 @@ public:
     UserInformation(string a,string b,ClassInformation c):ID(a),Password(b),classInformation(c){}
 };
 
+class StudentInformation : public ClassInformation{
+public:
+    int number;
+    string name;
+    string detail;
+    StudentInformation(int a,int b,int c,string d,string e){
+        grade=a;
+        classNumber=b;
+        number=c;
+        name=d;
+        detail=e;
+    }
+};
+
 vector<UserInformation> Userlist;
+vector<StudentInformation> StudentsList;
 
 int FindUserIndex(string receive){
     for(int i=0;i<Userlist.size();i++)
@@ -33,6 +49,9 @@ bool isAlreadyExists(string receive){
     for(int i=0;i<Userlist.size();i++)
         if(Userlist[i].ID==receive) return true;
     return false;    
+}
+
+void AddStudentInformation(int grade,int classNumber){
 }
 
 int main(){
@@ -94,6 +113,14 @@ int main(){
                 printf("이용해 주셔서 감사합니다");
                 return 0;
             }
+        }
+        while(true){
+            printf("1.학생 추가 2.학생 정보 수정 3.학생 정보 출력 4.로그아웃:");
+            scanf("%d",&reply);
+            if(reply==1) AddStudentInformation(Userlist[UserIndex].classInformation.grade,Userlist[UserIndex].classInformation.classNumber);
+            else if(reply==2)
+            else if(reply==3)
+            else break;
         }
     }
 }
