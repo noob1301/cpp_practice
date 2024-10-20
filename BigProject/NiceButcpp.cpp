@@ -27,12 +27,12 @@ public:
     int number;
     string name;
     string detail;
-    StudentInformation(int a,int b,int c,string d,string e){
+    StudentInformation(int a,int b,int c,string d){
         grade=a;
         classNumber=b;
         number=c;
         name=d;
-        detail=e;
+        detail="NULL";
     }
 };
 
@@ -52,6 +52,17 @@ bool isAlreadyExists(string receive){
 }
 
 void AddStudentInformation(int grade,int classNumber){
+    int receiveGrade,receiveClassNumber,number;
+    string name;
+    printf("학생 정보를 입력ex)3-1 10 안현준:");
+    scanf("%d-%d %d",&receiveGrade,receiveClassNumber,number);
+    cin>>name;
+    if(receiveGrade!=grade||receiveClassNumber!=classNumber) printf("자신의 반만 추가가능합니다!\n");
+    else if(number>99) printf("불가능한 번호\n");
+    else{
+        StudentsList.push_back(StudentInformation(receiveGrade,receiveClassNumber,number,name));
+        printf("추가 완료.\n");
+    }
 }
 
 int main(){
@@ -115,11 +126,11 @@ int main(){
             }
         }
         while(true){
-            printf("1.학생 추가 2.학생 정보 수정 3.학생 정보 출력 4.로그아웃:");
+            printf("[%d학년%d반]1.학생 추가 2.학생 정보 수정 3.학생 정보 출력 4.로그아웃:",Userlist[UserIndex].classInformation.grade,Userlist[UserIndex].classInformation.classNumber);
             scanf("%d",&reply);
             if(reply==1) AddStudentInformation(Userlist[UserIndex].classInformation.grade,Userlist[UserIndex].classInformation.classNumber);
-            else if(reply==2)
-            else if(reply==3)
+            /*else if(reply==2)
+            else if(reply==3)*/
             else break;
         }
     }
