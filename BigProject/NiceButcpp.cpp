@@ -65,6 +65,15 @@ void AddStudentInformation(int grade,int classNumber){
     }
 }
 
+void ChangeStudentInformation(int grade,int class){
+    bool HavingSameClass=false;
+    for(int i=0;i<StudentsList.size();i++)
+        if(StudentsList[i].grade==grade&&StudentsList[i].class==class){
+            printf("%d번 %s\n 세특%c",StudentsList[i].number,(StudentsList[i].name.)c_str(),(StudentsList[i].detail=="NULL")?'무':'유');
+            HavingSameClass=true;
+        }
+    if(!HavingSameClass) printf("학생 미존재\n");   
+}
 
 int main(){
     int reply,UserIndex;
@@ -111,7 +120,7 @@ int main(){
                         printf("몇반을 관리?ex)3-2:");
                         int a,b;
                         scanf("%d-%d",&a,&b);
-                        if(a>99||b>99) printf("존재할 수 없는 반");
+                        if(a>99||a<1||b>99||b<1) printf("존재할 수 없는 반");
                         else{
                             Userlist.push_back(UserInformation(Store_ID,Store_Password,ClassInformation(a,b)));
                             UserIndex=Userlist.size()-1;
