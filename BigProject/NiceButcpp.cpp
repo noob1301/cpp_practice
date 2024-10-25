@@ -55,7 +55,7 @@ void AddStudentInformation(int grade,int classNumber){
     int receiveGrade,receiveClassNumber,number;
     string name;
     printf("학생 정보를 입력ex)3-1 10 안현준:");
-    scanf("%d-%d %d",&receiveGrade,receiveClassNumber,number);
+    scanf("%d-%d %d",&receiveGrade,&receiveClassNumber,&number);
     cin>>name;
     if(receiveGrade!=grade||receiveClassNumber!=classNumber) printf("자신의 반만 추가가능합니다!\n");
     else if(number>99) printf("불가능한 번호\n");
@@ -64,6 +64,7 @@ void AddStudentInformation(int grade,int classNumber){
         printf("추가 완료.\n");
     }
 }
+
 
 int main(){
     int reply,UserIndex;
@@ -129,8 +130,8 @@ int main(){
             printf("[%d학년%d반]1.학생 추가 2.학생 정보 수정 3.학생 정보 출력 4.로그아웃:",Userlist[UserIndex].classInformation.grade,Userlist[UserIndex].classInformation.classNumber);
             scanf("%d",&reply);
             if(reply==1) AddStudentInformation(Userlist[UserIndex].classInformation.grade,Userlist[UserIndex].classInformation.classNumber);
-            /*else if(reply==2)
-            else if(reply==3)*/
+            else if(reply==2) ChangeStudentInformation();
+            /*else if(reply==3)*/
             else break;
         }
     }
