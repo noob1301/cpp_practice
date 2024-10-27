@@ -65,11 +65,11 @@ void AddStudentInformation(int grade,int classNumber){
     }
 }
 
-void ChangeStudentInformation(int grade,int class){
+void ChangeStudentInformation(int grade,int class_num){
     bool HavingSameClass=false;
     for(int i=0;i<StudentsList.size();i++)
-        if(StudentsList[i].grade==grade&&StudentsList[i].class==class){
-            printf("%d번 %s\n 세특%c",StudentsList[i].number,(StudentsList[i].name.)c_str(),(StudentsList[i].detail=="NULL")?'무':'유');
+        if(StudentsList[i].grade==grade&&StudentsList[i].class==class_num){
+            printf("%d번 %s\n 세특%s",StudentsList[i].number,StudentsList[i].name.c_str(),(StudentsList[i].detail=="NULL")?"무":"유");
             HavingSameClass=true;
         }
     if(!HavingSameClass) printf("학생 미존재\n");   
@@ -139,7 +139,7 @@ int main(){
             printf("[%d학년%d반]1.학생 추가 2.학생 정보 수정 3.학생 정보 출력 4.로그아웃:",Userlist[UserIndex].classInformation.grade,Userlist[UserIndex].classInformation.classNumber);
             scanf("%d",&reply);
             if(reply==1) AddStudentInformation(Userlist[UserIndex].classInformation.grade,Userlist[UserIndex].classInformation.classNumber);
-            else if(reply==2) ChangeStudentInformation();
+            else if(reply==2) ChangeStudentInformation(Userlist[UserIndex].classInformation.grade,Userlist[UserIndex].classInformation.classNumber);
             /*else if(reply==3)*/
             else break;
         }
