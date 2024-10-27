@@ -68,8 +68,8 @@ void AddStudentInformation(int grade,int classNumber){
 void ChangeStudentInformation(int grade,int class_num){
     bool HavingSameClass=false;
     for(int i=0;i<StudentsList.size();i++)
-        if(StudentsList[i].grade==grade&&StudentsList[i].class==class_num){
-            printf("%d번 %s\n 세특%s",StudentsList[i].number,StudentsList[i].name.c_str(),(StudentsList[i].detail=="NULL")?"무":"유");
+        if(StudentsList[i].grade==grade&&StudentsList[i].classNumber==class_num){
+            printf("%d번 %s 세특%s\n",StudentsList[i].number,StudentsList[i].name.c_str(),(StudentsList[i].detail=="NULL")?"무":"유");
             HavingSameClass=true;
         }
     if(!HavingSameClass) printf("학생 미존재\n");   
